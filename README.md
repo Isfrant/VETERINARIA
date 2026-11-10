@@ -18,37 +18,39 @@ Eficiencia Operativa: Reduce significativamente el tiempo empleado por los veter
 **REQUERIMIENTOS FUNCIONALES**
 | ID | Módulo | Requerimiento |
 | :--- | :--- | :--- |
-| **RF-01** | Usuarios y Acceso | El sistema debe permitir iniciar y cerrar sesión con usuario y contraseña. |
-| **RF-02** | Usuarios y Acceso | El sistema debe manejar tres roles (Administrador, Recepcionista y Veterinario) con permisos distintos. |
-| **RF-03** | Usuarios y Acceso | El Administrador debe poder crear, editar, desactivar y consultar usuarios. |
-| **RF-04** | Pacientes y Clientes | El sistema debe permitir registrar un propietario (documento, nombre, teléfono y email), validando que el documento no esté duplicado. |
-| **RF-05** | Pacientes y Clientes | El sistema debe permitir registrar una o varias mascotas asociadas a un propietario (nombre, especie, raza, edad). |
-| **RF-06** | Pacientes y Clientes | El sistema debe permitir buscar pacientes por documento del propietario o por nombre de la mascota. |
-| **RF-07** | Pacientes y Clientes | El sistema debe mostrar los datos completos de un paciente y de su propietario. |
-| **RF-08** | Consulta e Historia Clínica | El veterinario debe poder registrar una consulta médica (fecha, motivo y mascota), quedando asociada automáticamente a él. |
-| **RF-09** | Consulta e Historia Clínica | El veterinario debe poder registrar el diagnóstico y el tratamiento de la consulta. |
-| **RF-10** | Consulta e Historia Clínica | El veterinario debe poder asignar medicamentos e insumos a la consulta, indicando la cantidad utilizada. |
-| **RF-11** | Consulta e Historia Clínica | El sistema debe mostrar el historial clínico de la mascota en orden cronológico. |
-| **RF-12** | Inventario | El Administrador debe poder crear, editar y desactivar productos (nombre, stock actual, precio unitario). |
-| **RF-13** | Inventario | El sistema debe mostrar el listado de productos con su stock y resaltar visualmente los de stock bajo. |
-| **RF-14** | Inventario | El sistema debe descontar automáticamente del stock las cantidades utilizadas al registrar una atención. |
-| **RF-15** | Inventario | El sistema no debe permitir asignar una cantidad mayor al stock disponible y debe mostrar un mensaje de error claro. |
-| **RF-16** | Reportes | El Administrador debe poder consultar el consumo de insumos por día y por mes. |
+| **RF-01** | Usuarios y Acceso | El sistema debe permitir iniciar sesión, cerrar sesión y recuperar la contraseña. |
+| **RF-02** | Usuarios y Acceso | El sistema debe manejar cuatro perfiles (Administrador, Recepcionista, Veterinario y Cliente/Propietario) con permisos distintos. |
+| **RF-03** | Usuarios y Acceso | El Administrador debe poder crear, editar, desactivar y consultar usuarios, y asignarles roles. |
+| **RF-04** | Usuarios y Acceso | El cliente debe poder crear su propia cuenta en el sistema. |
+| **RF-05** | Pacientes y Clientes | El sistema debe permitir registrar un propietario (documento, nombre, teléfono y email), validando que el documento no esté duplicado. |
+| **RF-06** | Pacientes y Clientes | El sistema debe permitir registrar y actualizar una o varias mascotas por propietario; el cliente solo podrá gestionar las suyas. |
+| **RF-07** | Pacientes y Clientes | El personal debe poder buscar pacientes por cédula del dueño o nombre de la mascota. |
+| **RF-08** | Citas | El cliente debe poder solicitar una cita seleccionando mascota, motivo, fecha y hora disponible. |
+| **RF-09** | Citas | La recepcionista debe poder aprobar, rechazar o reprogramar las solicitudes de cita y consultar la agenda de atención. |
+| **RF-10** | Citas | El cliente debe poder cancelar sus citas y consultar su estado e historial. |
+| **RF-11** | Consulta e Historia Clínica | El veterinario debe poder registrar una consulta médica con su diagnóstico y tratamiento, quedando asociada automáticamente a él. |
+| **RF-12** | Consulta e Historia Clínica | El veterinario debe poder asignar medicamentos e insumos a la consulta, indicando la cantidad utilizada. |
+| **RF-13** | Consulta e Historia Clínica | El sistema debe mostrar el historial clínico de cada mascota en orden cronológico; el cliente podrá consultarlo sin modificarlo. |
+| **RF-14** | Inventario | El Administrador debe poder crear, editar y eliminar productos, y ver el listado con su stock resaltando visualmente los de stock bajo. |
+| **RF-15** | Inventario | El sistema debe validar las existencias y descontar automáticamente del stock las cantidades utilizadas en cada atención, mostrando un error claro si no hay suficiente. |
+| **RF-16** | Reportes y Notificaciones | El Administrador debe poder consultar el consumo de insumos por día y por mes. |
+| **RF-17** | Reportes y Notificaciones | El sistema debe generar alertas cuando los productos tengan existencias bajas. |
+| **RF-18** | Reportes y Notificaciones | El sistema debe notificar al cliente la aprobación, rechazo o modificación de sus citas y enviarle recordatorios de las próximas. |
 
 **REQUERIMIENTOS NO FUNCIONALES**
 | ID | Categoría | Requerimiento |
 | :--- | :--- | :--- |
 | **RNF-01** | Seguridad | Las contraseñas deben almacenarse cifradas (hash con BCrypt o similar), nunca en texto plano. |
-| **RNF-02** | Seguridad | El acceso a cada funcionalidad debe restringirse según el rol del usuario. |
+| **RNF-02** | Seguridad | El acceso a cada funcionalidad debe restringirse según el rol; un cliente solo podrá acceder a sus propias mascotas, citas e historial. |
 | **RNF-03** | Seguridad | La comunicación entre cliente y servidor debe usar HTTPS. |
 | **RNF-04** | Seguridad | La sesión debe expirar tras un periodo de inactividad (por ejemplo, 30 minutos). |
-| **RNF-05** | Seguridad | El sistema debe proteger los datos personales de los propietarios conforme a la Ley 1581 de 2012 (Colombia). |
+| **RNF-05** | Seguridad | El sistema debe proteger los datos personales conforme a la Ley 1581 de 2012 (Colombia). |
 | **RNF-06** | Rendimiento | Las búsquedas de pacientes deben responder en menos de 2 segundos. |
-| **RNF-07** | Rendimiento | El sistema debe soportar al menos 20 usuarios concurrentes sin degradación notable. |
+| **RNF-07** | Rendimiento | El sistema debe soportar al menos 50 usuarios concurrentes sin degradación notable. |
 | **RNF-08** | Integridad de datos | El registro de una atención y el descuento de stock deben ejecutarse en una sola transacción (si falla uno, se revierte todo). |
-| **RNF-09** | Integridad de datos | El sistema debe manejar la concurrencia al descontar stock para evitar inconsistencias. |
+| **RNF-09** | Integridad de datos | El sistema debe manejar la concurrencia al descontar stock y reservar citas, evitando inconsistencias y reservas duplicadas. |
 | **RNF-10** | Integridad de datos | El sistema debe validar los datos de entrada tanto en el cliente como en el servidor. |
-| **RNF-11** | Usabilidad | La interfaz debe ser clara e intuitiva, requiriendo capacitación mínima. |
+| **RNF-11** | Usabilidad | La interfaz debe ser clara e intuitiva, de modo que un cliente pueda solicitar una cita sin capacitación previa. |
 | **RNF-12** | Usabilidad | Los mensajes de error y confirmación deben estar en español y ser comprensibles. |
 | **RNF-13** | Usabilidad | La interfaz debe ser responsiva (computador, tableta y celular). |
 | **RNF-14** | Compatibilidad | El sistema debe funcionar en las versiones recientes de Chrome, Firefox, Edge y Safari. |
