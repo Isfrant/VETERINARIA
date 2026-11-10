@@ -57,10 +57,10 @@ Eficiencia Operativa: Reduce significativamente el tiempo empleado por los veter
 
 
 **DIAGRAMAS DE CASO DE USO**
-<img width="1031" height="1600" alt="image" src="https://github.com/user-attachments/assets/e272a831-4002-41b3-b2fb-c0a21de0bbfd" />
+<img width="1600" height="2220" alt="Diagrama en blanco - Página 1" src="https://github.com/user-attachments/assets/b0aed84e-7384-4bc3-a6e9-51d590e24a41" />
 
 **DIAGRAMA DE CLASES**
-<img width="1261" height="1375" alt="image" src="https://github.com/user-attachments/assets/c22a6e5f-152d-4888-9b03-e2b6817f36b5" />
+<img width="1570" height="2090" alt="Diagrama en blanco - Página 4" src="https://github.com/user-attachments/assets/eb4c08c1-fd35-4382-8642-ad005e24385b" />
 
 **DIAGRAMA ENTIDAD-RELACION**
 <img width="1016" height="1021" alt="image" src="https://github.com/user-attachments/assets/f9eb7bfa-5dc3-4c0e-9697-9bcbfbcfef24" />
