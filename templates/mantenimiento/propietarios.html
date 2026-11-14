@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Propietarios')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Propietarios</h3>
+    <a class="btn btn-success" th:href="@{/mantenimiento/propietarios/nuevo}">+ Nuevo propietario</a>
+</div>
+<form class="form-inline mb-3" th:action="@{/mantenimiento/propietarios}" method="get">
+    <input class="form-control mr-2" name="q" th:value="${q}" placeholder="Buscar por cédula o nombre">
+    <button class="btn btn-outline-primary">Buscar</button>
+</form>
+<div class="table-responsive"><table class="table table-striped table-sm bg-white">
+    <thead class="thead-dark"><tr><th>Documento</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Cuenta</th><th></th></tr></thead>
+    <tbody>
+    <tr th:each="p : ${lista}">
+        <td th:text="${p.documento}"></td><td th:text="${p.nombre}"></td>
+        <td th:text="${p.telefono}"></td><td th:text="${p.email}"></td>
+        <td><span class="badge" th:classappend="${p.usuario != null} ? 'badge-success' : 'badge-secondary'" th:text="${p.usuario != null} ? 'Con cuenta' : 'Sin cuenta'"></span></td>
+        <td class="text-nowrap">
+            <a class="btn btn-sm btn-primary" th:href="@{/mantenimiento/propietarios/editar/{id}(id=${p.id})}">Editar</a>
+            <form class="d-inline" th:action="@{/mantenimiento/propietarios/eliminar/{id}(id=${p.id})}" method="post" onsubmit="return confirm('¿Eliminar este propietario?');">
+                <button class="btn btn-sm btn-danger">Eliminar</button></form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(lista)}"><td colspan="6" class="text-center text-muted">Sin registros</td></tr>
+    </tbody></table></div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

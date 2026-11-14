@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Historial clínico')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<h3 class="mb-3">Historial clínico de mis mascotas</h3>
+<p class="text-muted">Solo lectura: usted puede consultar los diagnósticos y tratamientos, pero no modificarlos.</p>
+<div th:each="h : ${lista}" class="card mb-3">
+    <div class="card-header">
+        <strong th:text="${h.mascota.nombre}"></strong> ·
+        <span th:text="${#temporals.format(h.fecha,'dd/MM/yyyy')}"></span> ·
+        <small>Atendió: <span th:text="${h.veterinario.nombre}"></span></small>
+    </div>
+    <div class="card-body">
+        <p class="mb-1"><strong>Motivo:</strong> <span th:text="${h.motivo}"></span></p>
+        <p class="mb-1"><strong>Diagnóstico:</strong> <span th:text="${h.diagnostico}"></span></p>
+        <p class="mb-1"><strong>Tratamiento:</strong> <span th:text="${h.tratamiento}"></span></p>
+    </div>
+</div>
+<div class="alert alert-info" th:if="${#lists.isEmpty(lista)}">Aún no hay atenciones registradas.</div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

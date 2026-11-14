@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Crear cuenta')}"></head>
+<body class="fondo-login">
+<div class="container">
+    <div class="row justify-content-center py-4">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="text-center mb-2"><img th:src="@{/img/logo.png}" class="logo-login" alt="PetCare Veterinaria"></div>
+                    <h4 class="mb-3">Crear cuenta de cliente</h4>
+                    <form th:action="@{/registro}" th:object="${form}" method="post">
+                        <div class="alert alert-danger" th:each="e : ${#fields.globalErrors()}" th:text="${e}"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Documento (cédula)</label>
+                                <input th:field="*{documento}" class="form-control" th:classappend="${#fields.hasErrors('documento')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{documento}"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Nombre completo</label>
+                                <input th:field="*{nombre}" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Teléfono</label>
+                                <input th:field="*{telefono}" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Correo electrónico</label>
+                                <input th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{email}"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Usuario</label>
+                                <input th:field="*{nombreUsuario}" class="form-control" th:classappend="${#fields.hasErrors('nombreUsuario')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{nombreUsuario}"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Contraseña</label>
+                                <input type="password" th:field="*{contrasena}" class="form-control" th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{contrasena}"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Crear cuenta</button>
+                        <a th:href="@{/login}" class="btn btn-link">Volver</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

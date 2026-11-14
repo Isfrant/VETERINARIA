@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Veterinario')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<div class="row justify-content-center"><div class="col-md-7"><div class="card">
+<div class="card-header" th:text="${veterinario.id == null} ? 'Nuevo veterinario' : 'Editar veterinario'"></div>
+<div class="card-body">
+<form th:action="@{/mantenimiento/veterinarios/guardar}" th:object="${veterinario}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group"><label>Documento</label>
+        <input th:field="*{documento}" class="form-control" th:classappend="${#fields.hasErrors('documento')} ? 'is-invalid'">
+        <div class="invalid-feedback" th:errors="*{documento}"></div></div>
+    <div class="form-group"><label>Nombre</label>
+        <input th:field="*{nombre}" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+        <div class="invalid-feedback" th:errors="*{nombre}"></div></div>
+    <div class="form-group"><label>Teléfono</label><input th:field="*{telefono}" class="form-control"></div>
+    <div class="form-group"><label>Email</label>
+        <input th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+        <div class="invalid-feedback" th:errors="*{email}"></div></div>
+    <div class="form-group"><label>Cuenta de usuario (rol VETERINARIO)</label>
+        <select name="usuario.id" class="form-control">
+            <option value="">-- Sin cuenta --</option>
+            <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombreUsuario}"
+                    th:selected="${veterinario.usuario != null and veterinario.usuario.id == u.id}"></option>
+        </select>
+        <small class="text-muted">Necesaria para que el veterinario pueda registrar consultas.</small></div>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" th:href="@{/mantenimiento/veterinarios}">Cancelar</a>
+</form></div></div></div></div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

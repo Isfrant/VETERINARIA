@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Citas')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<h3 class="mb-3">Solicitudes y agenda de citas</h3>
+<form class="form-inline mb-3" th:action="@{/recepcion/citas}" method="get">
+    <label class="mr-2">Estado:</label>
+    <select name="estado" class="form-control mr-2" onchange="this.form.submit()">
+        <option value="">Todas</option>
+        <option th:each="e : ${estados}" th:value="${e}" th:text="${e}" th:selected="${e == estadoSel}"></option>
+    </select>
+</form>
+<div class="table-responsive"><table class="table table-sm bg-white">
+    <thead class="thead-dark"><tr><th>Fecha</th><th>Hora</th><th>Mascota</th><th>Propietario</th><th>Motivo</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody>
+    <tr th:each="c : ${lista}">
+        <td th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(c.hora,'HH:mm')}"></td>
+        <td th:text="${c.mascota.nombre}"></td>
+        <td th:text="${c.propietario.nombre}"></td>
+        <td th:text="${c.motivo}"></td>
+        <td><span class="badge badge-info" th:text="${c.estado}"></span></td>
+        <td>
+            <div th:if="${c.estado.name() == 'PENDIENTE'}" class="mb-1">
+                <form class="d-inline" th:action="@{/recepcion/citas/aprobar/{id}(id=${c.id})}" method="post"><button class="btn btn-sm btn-success">Aprobar</button></form>
+                <form class="d-inline" th:action="@{/recepcion/citas/rechazar/{id}(id=${c.id})}" method="post"><button class="btn btn-sm btn-danger">Rechazar</button></form>
+            </div>
+            <form th:if="${c.estado.name() == 'PENDIENTE' or c.estado.name() == 'APROBADA' or c.estado.name() == 'REPROGRAMADA'}"
+                  class="form-inline" th:action="@{/recepcion/citas/reprogramar/{id}(id=${c.id})}" method="post">
+                <input type="date" name="fecha" class="form-control form-control-sm mr-1" th:min="${hoy}" required>
+                <select name="hora" class="form-control form-control-sm mr-1" required>
+                    <option th:each="h : ${horas}" th:value="${h}" th:text="${h}"></option>
+                </select>
+                <button class="btn btn-sm btn-warning">Reprogramar</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(lista)}"><td colspan="7" class="text-center text-muted">No hay citas</td></tr>
+    </tbody></table></div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Hasta pronto')}"></head>
+<body class="fondo-login">
+<div class="container">
+    <div class="row justify-content-center pt-5">
+        <div class="col-md-6">
+            <div class="card shadow text-center">
+                <div class="card-body p-5">
+                    <img th:src="@{/img/logo.png}" class="logo-login" alt="PetCare Veterinaria">
+                    <h3 class="mt-3">¡Hasta pronto!</h3>
+                    <p class="lead">Su sesión se cerró correctamente. Gracias por usar Veterinaria PetCare.</p>
+                    <a th:href="@{/login}" class="btn btn-primary">Volver a ingresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

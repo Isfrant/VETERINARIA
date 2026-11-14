@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Mis citas')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<div class="row">
+<div class="col-md-5 mb-3"><div class="card">
+    <div class="card-header">Solicitar cita</div>
+    <div class="card-body">
+    <div class="alert alert-warning" th:if="${#lists.isEmpty(mascotas)}">Primero registre una mascota en «Mis mascotas».</div>
+    <form th:action="@{/cliente/citas/solicitar}" method="post" th:unless="${#lists.isEmpty(mascotas)}">
+        <div class="form-group"><label>Mascota</label>
+            <select name="mascotaId" class="form-control" required>
+                <option th:each="m : ${mascotas}" th:value="${m.id}" th:text="${m.nombre}"></option>
+            </select></div>
+        <div class="form-row">
+            <div class="form-group col-md-6"><label>Fecha</label><input type="date" name="fecha" class="form-control" th:min="${hoy}" required></div>
+            <div class="form-group col-md-6"><label>Hora</label>
+                <select name="hora" class="form-control" required><option th:each="h : ${horas}" th:value="${h}" th:text="${h}"></option></select></div>
+        </div>
+        <div class="form-group"><label>Motivo de consulta</label><textarea name="motivo" class="form-control" rows="3" required></textarea></div>
+        <button class="btn btn-primary">Enviar solicitud</button>
+    </form></div></div></div>
+<div class="col-md-7"><h4>Estado de mis citas</h4>
+    <div class="table-responsive"><table class="table table-sm bg-white">
+        <thead class="thead-dark"><tr><th>Fecha</th><th>Hora</th><th>Mascota</th><th>Motivo</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="c : ${lista}">
+            <td th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}"></td>
+            <td th:text="${#temporals.format(c.hora,'HH:mm')}"></td>
+            <td th:text="${c.mascota.nombre}"></td><td th:text="${c.motivo}"></td>
+            <td><span class="badge badge-info" th:text="${c.estado}"></span></td>
+            <td><form th:if="${c.estado.name() == 'PENDIENTE' or c.estado.name() == 'APROBADA' or c.estado.name() == 'REPROGRAMADA'}"
+                      th:action="@{/cliente/citas/cancelar/{id}(id=${c.id})}" method="post" onsubmit="return confirm('¿Cancelar la cita?');">
+                <button class="btn btn-sm btn-outline-danger">Cancelar</button></form></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(lista)}"><td colspan="6" class="text-center text-muted">No tiene citas</td></tr>
+        </tbody></table></div>
+</div></div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

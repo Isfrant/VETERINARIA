@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Mis mascotas')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<div class="row">
+<div class="col-md-7"><h3>Mis mascotas</h3>
+    <div class="table-responsive"><table class="table table-striped table-sm bg-white">
+        <thead class="thead-dark"><tr><th>Nombre</th><th>Especie</th><th>Raza</th><th>Edad</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="m : ${lista}">
+            <td th:text="${m.nombre}"></td><td th:text="${m.especie}"></td><td th:text="${m.raza}"></td><td th:text="${m.edad}"></td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-primary" th:href="@{/cliente/mascotas(editar=${m.id})}">Editar</a>
+                <form class="d-inline" th:action="@{/cliente/mascotas/eliminar/{id}(id=${m.id})}" method="post" onsubmit="return confirm('La mascota se eliminará de su lista y se cancelarán sus citas. ¿Continuar?');">
+                    <button class="btn btn-sm btn-danger">Eliminar</button></form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(lista)}"><td colspan="5" class="text-center text-muted">Aún no ha registrado mascotas</td></tr>
+        </tbody></table></div>
+</div>
+<div class="col-md-5"><div class="card">
+    <div class="card-header" th:text="${mascota.id == null} ? 'Registrar mascota' : 'Editar mascota'"></div>
+    <div class="card-body">
+    <form th:action="@{/cliente/mascotas/guardar}" th:object="${mascota}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group"><label>Nombre</label>
+            <input th:field="*{nombre}" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{nombre}"></div></div>
+        <div class="form-group"><label>Especie</label>
+            <input th:field="*{especie}" class="form-control" list="especies" th:classappend="${#fields.hasErrors('especie')} ? 'is-invalid'">
+            <datalist id="especies"><option value="Perro"><option value="Gato"><option value="Ave"><option value="Conejo"></datalist>
+            <div class="invalid-feedback" th:errors="*{especie}"></div></div>
+        <div class="form-row">
+            <div class="form-group col-md-8"><label>Raza</label><input th:field="*{raza}" class="form-control"></div>
+            <div class="form-group col-md-4"><label>Edad</label><input type="number" min="0" th:field="*{edad}" class="form-control"></div>
+        </div>
+        <button class="btn btn-primary">Guardar</button>
+        <a class="btn btn-secondary" th:href="@{/cliente/mascotas}" th:if="${mascota.id != null}">Cancelar</a>
+    </form></div></div></div>
+</div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Producto')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container contenido mt-4">
+<div class="row justify-content-center"><div class="col-md-6"><div class="card">
+<div class="card-header" th:text="${producto.id == null} ? 'Nuevo producto' : 'Editar producto'"></div>
+<div class="card-body">
+<form th:action="@{/mantenimiento/productos/guardar}" th:object="${producto}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group"><label>Nombre</label>
+        <input th:field="*{nombre}" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+        <div class="invalid-feedback" th:errors="*{nombre}"></div></div>
+    <div class="form-row">
+        <div class="form-group col-md-4"><label>Stock actual</label>
+            <input type="number" th:field="*{stockActual}" class="form-control" th:classappend="${#fields.hasErrors('stockActual')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{stockActual}"></div></div>
+        <div class="form-group col-md-4"><label>Stock mínimo</label>
+            <input type="number" th:field="*{stockMinimo}" class="form-control" th:classappend="${#fields.hasErrors('stockMinimo')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{stockMinimo}"></div></div>
+        <div class="form-group col-md-4"><label>Precio unitario</label>
+            <input type="number" step="0.01" th:field="*{precioUnitario}" class="form-control" th:classappend="${#fields.hasErrors('precioUnitario')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{precioUnitario}"></div></div>
+    </div>
+    <div class="form-check mb-3"><input type="checkbox" th:field="*{activo}" class="form-check-input"><label class="form-check-label" for="activo1">Activo</label></div>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" th:href="@{/mantenimiento/productos}">Cancelar</a>
+</form></div></div></div></div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
