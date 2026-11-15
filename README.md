@@ -67,6 +67,68 @@ Eficiencia Operativa: Reduce significativamente el tiempo empleado por los veter
 **DIAGRAMA ENTIDAD-RELACION**
 <img width="2788" height="1225" alt="Diagrama en blanco (1)" src="https://github.com/user-attachments/assets/28e98fb5-02b6-46d6-b7a4-43704dcac173" />
 
+** Parte operativa del proyecto**
+
+La parte operativa de Veterinaria PetCare es el flujo diario de la clínica, desde que el cliente pide una cita hasta que el veterinario atiende a la mascota y el sistema descuenta los insumos del inventario. En ese flujo se capturan los datos que justifican el sistema: el historial clínico de cada mascota y el consumo real de medicamentos e insumos.
+
+10.1 Proceso operativo
+
+**Paso 1. Solicitud de cita (perfil Cliente).**
+El cliente crea su cuenta, registra sus mascotas y solicita una cita. Elige la mascota, la fecha, la hora y el motivo de consulta. La cita queda en estado *Pendiente*.
+
+**Paso 2. Gestión de la agenda (perfil Recepcionista).**
+El recepcionista revisa las solicitudes y puede *aprobar*, *rechazar* o *reprogramar* cada cita. Además registra propietarios y mascotas y los busca por cédula o por nombre. Cada decisión genera una notificación que el cliente ve en su pantalla de inicio.
+
+**Paso 3. Consulta médica (perfil Veterinario).**
+Cuando la mascota llega, el veterinario registra la consulta: elige la mascota (y, si la tiene, su cita aprobada), escribe el motivo, el diagnóstico y el tratamiento, y agrega los medicamentos e insumos utilizados con su cantidad. La cita pasa a estado Atendida.
+
+**Paso 4. Actualización automática del inventario.**
+Al guardar la consulta, el sistema descuenta del stock las cantidades usadas, todo en una sola transacción. Si algún producto no tiene existencias suficientes, la consulta no se guarda y no se descuenta nada. Para que dos veterinarios no gasten el mismo producto a la vez, el producto se bloquea mientras se actualiza.
+
+**Paso 5. Consulta y control (perfiles Cliente y Administrador).**
+- **Cliente:** consulta el historial clínico, los diagnósticos y los tratamientos de sus mascotas, solo para leer. Puede cancelar sus citas y ver su estado.
+- **Administrador:** controla el inventario con alertas de stock bajo y genera los reportes en PDF: inventario, stock bajo, consumo de insumos por mes, citas, pacientes e historial por mascota.
+
+10.2 Tablas que intervienen
+
+| Operación | Tablas que usa |
+|---|---|
+| Registro y acceso de usuarios | `usuario`, `propietario` |
+| Registro de mascotas | `mascota`, `propietario` |
+| Solicitud y gestión de citas | `cita`, `mascota`, `propietario`, `notificacion` |
+| Consulta médica | `historial_clinico`, `mascota`, `veterinario`, `cita` |
+| Insumos usados y descuento de stock | `detalle_atencion`, `producto`, `historial_clinico` |
+| Reportes | `producto`, `detalle_atencion`, `historial_clinico`, `cita`, `mascota`, `propietario` |
+
+10.3 Información que se captura
+
+- **Del cliente:** documento, nombre, teléfono, correo, usuario y contraseña, y los datos de cada mascota (nombre, especie, raza y edad).
+- **De la cita:** fecha, hora, motivo y estado.
+- **De la consulta:** fecha, motivo, diagnóstico, tratamiento, veterinario que atendió y mascota atendida.
+- **Del consumo:** producto utilizado y cantidad, con el descuento automático del stock.
+
+10.4 Reglas y validaciones
+
+- Las citas solo se pueden pedir en el horario de atención (08:00 a 17:00, en franjas de 30 minutos) y no en fechas pasadas.
+- No se permite reservar una franja que ya está ocupada.
+- Un cliente solo ve y gestiona sus propias mascotas, citas e historial.
+- La cita que se asocia a una consulta debe pertenecer a la mascota atendida.
+- No se puede registrar un consumo mayor al stock disponible.
+- Al "eliminar" una mascota, esta se oculta y se borran sus citas, pero se conservan su historial médico y los insumos consumidos. Solo el administrador puede reactivarla.
+
+10.5 Perfiles que participan
+
+| Perfil | Operaciones |
+|---|---|
+| **Cliente** | Registrar mascotas, solicitar y cancelar citas, ver notificaciones y el historial. |
+| **Recepcionista** | Registrar propietarios y mascotas, buscar pacientes, aprobar, rechazar o reprogramar citas. |
+| **Veterinario** | Registrar consultas, diagnósticos, tratamientos e insumos, y consultar el historial. |
+| **Administrador** | Controlar el inventario, ver las alertas de stock bajo y generar los reportes. |
+
+10.6 Por qué justifica el proyecto
+
+La parte operativa reúne en un solo sistema las tres necesidades que dieron origen al proyecto: llevar el historial clínico de cada mascota, agendar citas y controlar el consumo de insumos con el descuento automático del stock. Así se evita perder historiales en papel, descontrolar el inventario o cruzar horarios en la agenda.
+
 
 
 
