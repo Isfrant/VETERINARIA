@@ -65,7 +65,8 @@ Eficiencia Operativa: Reduce significativamente el tiempo empleado por los veter
 <img width="1570" height="2090" alt="Diagrama en blanco - Página 4" src="https://github.com/user-attachments/assets/eb4c08c1-fd35-4382-8642-ad005e24385b" />
 
 **DIAGRAMA ENTIDAD-RELACION**
-<img width="1016" height="1021" alt="image" src="https://github.com/user-attachments/assets/f9eb7bfa-5dc3-4c0e-9697-9bcbfbcfef24" />
+<img width="2788" height="1225" alt="Diagrama en blanco (1)" src="https://github.com/user-attachments/assets/28e98fb5-02b6-46d6-b7a4-43704dcac173" />
+
 
 
 
