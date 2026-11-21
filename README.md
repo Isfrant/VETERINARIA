@@ -125,6 +125,15 @@ Al guardar la consulta, el sistema descuenta del stock las cantidades usadas, to
 | **Veterinario** | Registrar consultas, diagnósticos, tratamientos e insumos, y consultar el historial. |
 | **Administrador** | Controlar el inventario, ver las alertas de stock bajo y generar los reportes. |
 
+| Usuario | Contraseña | Rol | Nombre | Qué puede hacer |
+|---|---|---|---|---|
+| `admin` | `Petcare2026*` | Administrador | Sin ficha (solo cuenta) | Mantenimiento, reportes, configuración de usuarios, inventario. |
+| `recep1` | `Petcare2026*` | Recepcionista | Sin ficha (solo cuenta) | Propietarios, pacientes y citas. |
+| `vet_ana` | `Petcare2026*` | Veterinario | Dra. Ana Pérez | Consultas e historial clínico. |
+| `vet_mateo` | `Petcare2026*` | Veterinario | Dr. Mateo Silva | Consultas e historial clínico. |
+| `maria.f` | `Petcare2026*` | Cliente | María Fernández | Mis mascotas (Max y Luna), mis citas e historial. |
+| `juan.t` | `Petcare2026*` | Cliente | Juan Torres | Mis mascotas (Rocky), mis citas e historial. |
+
 10.6 Por qué justifica el proyecto
 
 La parte operativa reúne en un solo sistema las tres necesidades que dieron origen al proyecto: llevar el historial clínico de cada mascota, agendar citas y controlar el consumo de insumos con el descuento automático del stock. Así se evita perder historiales en papel, descontrolar el inventario o cruzar horarios en la agenda.
