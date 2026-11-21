@@ -1,4 +1,4 @@
-FIDEL GARCIA MARTINEZ - YOSER ADRIAN SARABIA ORTEGA - JEFFERSON DAVID AYALA TORRES
+FIDEL GARCIA MARTINEZ - YOSER ADRIAN SARABIA ORTEGA - JEFFERSON DAVID AYALA TORRES.
 
 **OBJETIVO PRINCIPAL**
 Desarrollar un sistema de información para la gestión médica veterinaria e inventario de insumos , centralizando el registro de propietarios, pacientes (mascotas), atenciones clínicas y control automático de stock mediante una arquitectura robusta y segura en Spring Boot
